@@ -93,13 +93,13 @@ public class Adaline {
     double saidaEsperada;
     double erroAnterior;
     double erroAtual;
-    double menorErro;
     
     this.numEpocasTreinamento = 0;
-    menorErro = Double.MAX_VALUE;
 
     Comunicador.iniciarLog("Início treinamento");
     imprimirSituacao(arquivoTreinamento);
+    Comunicador.addLog("");
+    Comunicador.addLog("" + this.numEpocasTreinamento + " " + Double.toString(getErro(arquivoTreinamento)).replace(".", ","));
     
     try {
       do {
@@ -141,14 +141,11 @@ public class Adaline {
 
         arq.close();
         erroAtual = getErro(arquivoTreinamento);
-        if (erroAtual < menorErro) {
-          menorErro = erroAtual;
-          imprimirSituacao(arquivoTreinamento);
-        }
-
+        Comunicador.addLog("" + this.numEpocasTreinamento + " " + Double.toString(erroAtual).replace(".", ","));
       } while (Math.abs(erroAtual - erroAnterior) > PRECISAO);
 
-      Comunicador.addLog("\nFim do treinamento. Numero de epocas: " + this.numEpocasTreinamento);
+      Comunicador.addLog("\nFim do treinamento.");
+      imprimirSituacao(arquivoTreinamento);
     } catch (FileNotFoundException ex) {
       return false;
     } catch (IOException ex) {
@@ -166,10 +163,10 @@ public class Adaline {
     this.ultimaResposta = funcaoDegrauBipolar((valor1 * this.peso1) + (valor2 * this.peso2) + (valor3 * this.peso3) + (valor4 * this.peso4) + (-1.0 * this.peso0));
 
     if (this.ultimaResposta == -1.0) {
-      resposta = "Classe A";
+      resposta = "Válvula A";
     }
     if (this.ultimaResposta == 1.0) {
-      resposta = "Classe B";
+      resposta = "Válvula B";
     }
 
     return resposta;
@@ -240,11 +237,11 @@ public class Adaline {
       return 1.0;
     }
 
-    return 0.0;
+    return 1.0;
   }
   
   private void imprimirSituacao(ArquivoDadosTreinamento arquivoTreinamento) {
-    Comunicador.addLog("EPOCA " + this.numEpocasTreinamento + " -----------------");
+    Comunicador.addLog("EPOCA " + this.numEpocasTreinamento);
     Comunicador.addLog("Erro: " + Double.toString(getErro(arquivoTreinamento)).replace(".", ","));
     Comunicador.addLog("Pesos: " + Double.toString(this.peso0).replace(".", ",") + "; " + Double.toString(this.peso1).replace(".", ",")
             + "; " + Double.toString(this.peso2).replace(".", ",") + "; " + Double.toString(this.peso3).replace(".", ",")

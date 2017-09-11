@@ -71,7 +71,7 @@ public class Main extends javax.swing.JFrame {
     jBtnLimpar = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("Rede Perceptron - Jônatas Trabuco Belotti");
+    setTitle("Rede Adaline - Jônatas Trabuco Belotti");
     setPreferredSize(new java.awt.Dimension(800, 600));
     setResizable(false);
 
